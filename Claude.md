@@ -53,60 +53,84 @@ Timetable, Sessions, Attendance
 Code Conventions
 Naming
 
-Files: [e.g., kebab-case, PascalCase]
-Variables: [e.g., camelCase]
-Constants: [e.g., UPPER_SNAKE_CASE]
-Components: [e.g., PascalCase]
+Files: snake_case (e.g., models.py, views.py, serializers.py)
+Variables: snake_case (e.g., user_profile, course_code, attendance_record)
+Constants: UPPER_SNAKE_CASE (e.g., DAYS_OF_WEEK, MAX_QR_EXPIRY_MINUTES)
+Classes: PascalCase (e.g., User, Course, Attendance, Session)
+URLs: kebab-case (e.g., /api/start-session, /api/attendance-history)
 
 Style Guidelines
 
-[Indentation: spaces/tabs, size]
-[Quotes: single/double]
-[Semicolons: yes/no]
-[Line length limit]
+Indentation: 4 spaces (PEP 8)
+Quotes: Single quotes for strings (Django convention)
+Line length: 79-88 characters (PEP 8)
+Imports: Grouped (stdlib, third-party, local) with blank lines
 
 Patterns to Follow
 
-[State management approach]
-[Error handling patterns]
-[API call patterns]
-[Testing conventions]
+API Views: Django REST Framework ViewSets (ModelViewSet, ReadOnlyViewSet)
+Error handling: DRF exception handlers with proper status codes
+Serializers: ModelSerializer for CRUD, nested serializers for relationships
+Authentication: JWT tokens via PyJWT
+QR Security: HMAC-signed QR codes with expiration timestamps
+Testing: Django TestCase with DRF APIClient
 
 Dependencies & Tools
 
-Package Manager: [npm, yarn, pnpm]
-Build Tool: [Vite, Webpack, etc.]
-Linter/Formatter: [ESLint, Prettier]
-Testing: [Jest, Vitest, etc.]
+Package Manager: pip
+Requirements: requirements.txt (Django>=5.2.7, djangorestframework>=3.14.0)
+Database: MySQL (mysqlclient>=2.2.0)
+Authentication: PyJWT>=2.8.0
+Security: cryptography>=41.0.0 (for HMAC QR signing)
+Linter: flake8, pylint (optional)
+Formatter: black (optional)
 
 Key Files & Directories
-/src
-  /components  - [Description]
-  /utils       - [Description]
-  /services    - [Description]
-  /types       - [Description]
+/core
+  models.py       - User, Course, Enrollment, Timetable, Session, Attendance models
+  views.py        - API ViewSets (UserViewSet, CourseViewSet, etc.)
+  serializers.py  - DRF serializers for all models
+  admin.py        - Django admin configuration
+/attendance_system
+  settings.py     - Django project settings (database, installed apps, etc.)
+  urls.py         - Main URL routing with DRF router
+  wsgi.py         - WSGI configuration
+  asgi.py         - ASGI configuration
+/migrations       - Django database migrations
+requirements.txt  - Python package dependencies
+manage.py         - Django management script
+
 Development Workflow
 
-[How to start dev server]
-[How to run tests]
-[How to build for production]
-[Branch naming conventions]
+Start dev server: python manage.py runserver
+Run migrations: python manage.py makemigrations && python manage.py migrate
+Create superuser: python manage.py createsuperuser
+Run tests: python manage.py test
+Database setup: Run setup_database.bat (Windows) or equivalent script
+Branch naming: feature/description, bugfix/description, hotfix/description
 
 Important Notes
 
-[Any quirks or gotchas]
-[Performance considerations]
-[Security requirements]
-[Browser/platform support]
+Security: QR codes are HMAC-signed with expiration timestamps to prevent replay attacks
+Sessions: Once started, sessions remain active until expiration (no manual stop)
+Attendance: Unique constraint on (student, session) prevents duplicate scans
+User roles: is_student and is_professor flags on User model (extends AbstractUser)
+Database: MySQL configured via settings.py (see DJANGO_MYSQL_SYNC.md)
+IP tracking: Optional IP address logging in Attendance model for security auditing
+Related names: Custom related_name on User.groups and User.user_permissions to avoid clashes
 
 Current Focus
 
-[Setting up Databases]
-[Known issues or tech debt]
-[Upcoming features]
+Database synchronization between Django and MySQL
+Flutter mobile app integration (see FLUTTER_INTEGRATION_ANALYSIS.md)
+QR code generation and validation endpoints
+Session management and attendance tracking
+Admin panel configuration for course and user management
 
 Preferences
 
-[Your coding preferences]
-[How you like explanations]
-[Preferred libraries/approaches]
+Use Django REST Framework ViewSets for consistent API structure
+Follow Django best practices and PEP 8 for Python code
+Prefer explicit over implicit (clear model relationships, verbose field names)
+Document complex logic (QR signing, session expiration) with comments
+Use Django's built-in features (Model Meta options, validators) before custom solutions

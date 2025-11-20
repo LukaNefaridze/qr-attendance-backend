@@ -104,3 +104,4 @@ Django creates tables with the format: `{app_name}_{model_name}`
 **Q: Are there any delays?**
 - **A**: No, changes are immediate. Both tools read/write to the same database.
 
+
