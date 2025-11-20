@@ -11,8 +11,14 @@ REM Check if Python is available
 python --version >nul 2>&1
 if errorlevel 1 (
     echo ERROR: Python is not found in PATH
-    echo Please ensure Python is installed and added to PATH
-    echo Or activate your virtual environment first
+    echo.
+    echo Please ensure:
+    echo   1. Python is installed and added to PATH, OR
+    echo   2. Your virtual environment is activated
+    echo.
+    echo To activate virtual environment, run:
+    echo   venv\Scripts\activate
+    echo.
     pause
     exit /b 1
 )
