@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,15 +76,18 @@ WSGI_APPLICATION = 'attendance_system.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+# Use environment variables for database configuration to support remote connections
+# On the host computer (where MySQL runs): Set DB_HOST=127.0.0.1 or leave unset
+# On the remote computer: Set DB_HOST=<host_computer_ip_address>
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'attendance_db',
-        'USER': 'root',
-        'PASSWORD': 'admin123',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'NAME': os.environ.get('DB_NAME', 'attendance_db'),
+        'USER': os.environ.get('DB_USER', 'root'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', '1'),
+        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),  # Change to host computer's IP for remote access
+        'PORT': os.environ.get('DB_PORT', '3306'),
     }
 }
 
