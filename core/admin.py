@@ -53,7 +53,7 @@ class SessionAdmin(admin.ModelAdmin):
     list_display = ['timetable', 'started_at', 'is_active', 'expires_at']
     list_filter = ['is_active', 'started_at', 'expires_at']
     search_fields = ['timetable__course__code', 'timetable__course__name', 'qr_code']
-    readonly_fields = ['started_at', 'qr_code', 'qr_secret']
+    readonly_fields = ['started_at', 'qr_code', 'qr_secret', 'nonce']
 
 
 # Attendance Admin

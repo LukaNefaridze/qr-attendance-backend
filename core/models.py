@@ -84,6 +84,7 @@ class Session(models.Model):
     timetable = models.ForeignKey(Timetable, on_delete=models.CASCADE, related_name='sessions')
     qr_code = models.CharField(max_length=255, unique=True)  # HMAC-signed QR code
     qr_secret = models.CharField(max_length=255)  # Secret used for HMAC signing
+    nonce = models.CharField(max_length=255, blank=True, null=True)  # Random nonce for security
     started_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     expires_at = models.DateTimeField()  # When the QR code expires
