@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME', 'attendance_db'),
         'USER': os.environ.get('DB_USER', 'root'),
         'PASSWORD': os.environ.get('DB_PASSWORD', '1'),
-        'HOST': os.environ.get('DB_HOST', '192.168.56.1'),  # host computer's IP for remote access
+        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),  # Use 127.0.0.1 on host computer, set DB_HOST=<host_ip> on remote computer
         'PORT': os.environ.get('DB_PORT', '3306'),
     }
 }
